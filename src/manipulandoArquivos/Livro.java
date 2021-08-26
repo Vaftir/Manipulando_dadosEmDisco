@@ -1,5 +1,10 @@
 package manipulandoArquivos;
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 
@@ -25,6 +30,7 @@ public class Livro {
 		nome = "";
 		preco = 0F;
 	}
+
 	
 	
 	public String toString() {
@@ -33,6 +39,34 @@ public class Livro {
 				"\nTitulo: "+titulo+
 				"\nNome: " + nome +
 				"\nPreco: R$"+ df.format(preco);
+	}
+	
+	
+	public byte[] toByteArray() throws IOException { /// cria um vetor de bytes e escreve no arquivo
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream das = new DataOutputStream(baos);
+		
+		das.writeInt(idLivro);
+		das.writeUTF(titulo);
+		das.writeUTF(nome);
+		das.writeFloat(preco);
+		
+		return baos.toByteArray();
+		
+	}
+	
+	
+	public void fromByteArray(byte[] ba) throws IOException {///CARREAGA OS VALORES DOS ARQUIVOS NO VETOR
+		
+		ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+		DataInputStream dis = new DataInputStream(bais);
+		
+		idLivro = dis.readInt();
+		titulo = dis.readUTF();
+		nome = dis.readUTF();
+		preco = dis.readFloat();
+		
 	}
 	
 }

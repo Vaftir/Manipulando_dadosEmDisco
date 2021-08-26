@@ -19,6 +19,13 @@ public class Livro {
 		preco = p;
 	}
 	
+	public Livro() {
+		idLivro =-1;
+		titulo = "";
+		nome = "";
+		preco = 0F;
+	}
+	
 	
 	public String toString() {
 		

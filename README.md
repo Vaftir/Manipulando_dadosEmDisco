@@ -11,3 +11,4 @@
 - Versão 1 - método para escrever em um arquivo de disco usando **FileOutputStream**   e **DataOutputStream** (_por enquanto aplicado no main_)
 - Versão 2 - adiciona o metodo de leitura
 - versao 3 - reorganiza o codigo 
+- versao 4 - Aplica **RandomAccessFile** 

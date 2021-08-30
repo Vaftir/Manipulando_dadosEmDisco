@@ -12,6 +12,7 @@ public class main {
 
         byte[] ba;
         RandomAccessFile arq;
+        RandomAccessFile arqCliente;
 
         Livro l1 = new Livro(1, "Harry Potter e a pedra fliosofal", "J.K.Roling", 47.90F);
         Livro l2 = new Livro(2, "Harry Potter e a camara secreta (Exclusivo)", "J.K.Roling", 91.50F);
@@ -20,12 +21,28 @@ public class main {
         Livro l5 = new Livro();
         Livro l6 = new Livro();
 
+        Cliente c = new Cliente(1, "Robson","robson@gmail.com");
+        Cliente c1 = new Cliente(2, "Pedro","pedro@gmail.com");
+        Cliente c2 = new Cliente(1, "Jao","jao@gmail.com");
+        Cliente c3 = new Cliente();
+        Cliente c4 = new Cliente();
 
         try {
 
             //escrita
 
             arq = new RandomAccessFile("dados/livros.db", "rw");
+            arqCliente = new RandomAccessFile ("dados/clientes.db", "rw");
+
+            long cs1 = arqCliente.getFilePointer();
+            ba = c1.toByteArray();
+            arqCliente.writeInt(ba.length);
+            arqCliente.write(ba);
+
+            long cs2 = arqCliente.getFilePointer();
+            ba = c2.toByteArray();
+            arqCliente.writeInt(ba.length);
+            arqCliente.write(ba);
 
             long p1 = arq.getFilePointer();
             ba = l1.toByteArray();
@@ -45,15 +62,26 @@ public class main {
 
             //leitura
             int tam;
-            arq.seek(p3);
+            arqCliente.seek(cs1);
 
-            tam = arq.readInt();
+            tam = arqCliente.readInt();
             ba = new byte[tam];
-            arq.read(ba);
-            l4.fromByteArray(ba);
+            arqCliente.read(ba);
+            c3.fromByteArray(ba);
+
+            arqCliente.seek(cs2);
+
+            tam = arqCliente.readInt();
+            ba = new byte[tam];
+            arqCliente.read(ba);
+            c4.fromByteArray(ba);
+
+            arqCliente.seek(cs2);
 
 
-            arq.seek(p2);
+
+
+            /*arq.seek(p2);
             tam = arq.readInt();
             ba = new byte[tam];
             arq.read(ba);
@@ -63,11 +91,11 @@ public class main {
             tam = arq.readInt();
             ba = new byte[tam];
             arq.read(ba);
-            l6.fromByteArray(ba);
+            l6.fromByteArray(ba);*/
 
-            System.out.println(l4);
-            System.out.println(l5);
-            System.out.println(l6);
+            System.out.println(c4);
+            System.out.println(c3);
+            //System.out.println(l6);
 
 
             arq.close();

@@ -31,7 +31,10 @@ public class Livro {
 
 	public String toString() {
 
-		return "\nID: " + idLivro + "\nTitulo: " + titulo + "\nNome: " + nome + "\nPreco: R$" + df.format(preco);
+		return "\nID: " + idLivro +
+				"\nTitulo: " + titulo +
+				"\nNome: " + nome +
+				"\nPreco: R$" + df.format(preco);
 	}
 
 	public byte[] toByteArray() throws IOException { /// cria um vetor de bytes e escreve no arquivo

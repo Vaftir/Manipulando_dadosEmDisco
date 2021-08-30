@@ -12,3 +12,4 @@
 - Versão 2 - adiciona o metodo de leitura
 - versao 3 - reorganiza o codigo 
 - versao 4 - Aplica **RandomAccessFile** 
+- versao 5 - Aplica a classe de clientes 

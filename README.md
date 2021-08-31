@@ -13,3 +13,4 @@
 - versao 3 - reorganiza o codigo 
 - versao 4 - Aplica **RandomAccessFile** 
 - versao 5 - Aplica a classe de clientes 
+- versao 6 - Organiza completamente o codigo

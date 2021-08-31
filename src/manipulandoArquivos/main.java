@@ -1,103 +1,48 @@
 package manipulandoArquivos;
 
-import java.io.RandomAccessFile;
-
 import java.io.IOException;
 
 
 public class main {
 
+
+
     public static void main(String[] args) {
 
 
         byte[] ba;
-        RandomAccessFile arq;
-        RandomAccessFile arqCliente;
+        
+        Arrquivo<Livro> arqLivros;
+        Arrquivo<Cliente> arqCliente;
 
-        Livro l1 = new Livro(1, "Harry Potter e a pedra fliosofal", "J.K.Roling", 47.90F);
+       Livro l = new Livro ("Harry Potter e a camara secreta (Exclusivo)", "J.K.Roling", 91.50F);
+       Livro l1 = new Livro("Harry Potter e o calice de fogo (Vers. Illustrada)", "J.K.Roling e Martin robin", 159.99F);
 
-        Livro l2 = new Livro(2, "Harry Potter e a camara secreta (Exclusivo)", "J.K.Roling", 91.50F);
-
-        Livro l3 = new Livro(3, "Harry Potter e o calice de fogo (Vers. Illustrada)",
-                "J.K.Roling e Martin robin", 159.99F);
-        Livro l4 = new Livro();
-        Livro l5 = new Livro();
-        Livro l6 = new Livro();
-
-        Cliente c = new Cliente(1, "Robson","robson@gmail.com");
-        Cliente c1 = new Cliente(2, "Pedro","pedro@gmail.com");
-        Cliente c2 = new Cliente(3, "Jao","jao@gmail.com");
-        Cliente c3 = new Cliente();
-        Cliente c4 = new Cliente();
-        Cliente c5 = new Cliente();
+        Cliente c = new Cliente( "Robson","robson@gmail.com");
+        Cliente c1 = new Cliente( "Pedro","pedro@gmail.com");
 
         try {
 
-            //escrita
 
-            arq = new RandomAccessFile("dados/livros.db", "rw");
-            arqCliente = new RandomAccessFile ("dados/clientes.db", "rw");
+            arqLivros = new Arrquivo<>("livros",Livro.class.getConstructor());
+            arqCliente = new Arrquivo<>("clientes",Cliente.class.getConstructor());
 
-            long cs1 = arqCliente.getFilePointer();
-            ba = c.toByteArray();
-            arqCliente.writeInt(ba.length);
-            arqCliente.write(ba);
-
-            long cs2 = arqCliente.getFilePointer();
-            ba = c1.toByteArray();
-            arqCliente.writeInt(ba.length);
-            arqCliente.write(ba);
-
-            long cs3 = arqCliente.getFilePointer();
-            ba = c2.toByteArray();
-            arqCliente.writeInt(ba.length);
-            arqCliente.write(ba);
+            int i;
+            
+           arqLivros.create(l);
+           arqLivros.create(l1);
+           arqCliente.create(c);
+            arqCliente.create(c1);
 
 
 
-            //leitura
-            int tam;
+            Livro l3 = arqLivros.read(2);
+            Livro l4 = arqLivros.read(1);
 
-            arqCliente.seek(cs1);
-            tam = arqCliente.readInt();
-            ba = new byte[tam];
-            arqCliente.read(ba);
-            c3.fromByteArray(ba);
-
-            arqCliente.seek(cs2);
-            tam = arqCliente.readInt();
-            ba = new byte[tam];
-            arqCliente.read(ba);
-            c4.fromByteArray(ba);
-
-            arqCliente.seek(cs3);
-            tam = arqCliente.readInt();
-            ba = new byte[tam];
-            arqCliente.read(ba);
-            c5.fromByteArray(ba);
+            Cliente c2 = arqCliente.read(1);
 
 
-
-            /*arq.seek(p2);
-            tam = arq.readInt();
-            ba = new byte[tam];
-            arq.read(ba);
-            l5.fromByteArray(ba);
-
-            arq.seek(p1);
-            tam = arq.readInt();
-            ba = new byte[tam];
-            arq.read(ba);
-            l6.fromByteArray(ba);*/
-
-            System.out.println(c3);
-            System.out.println(c4);
-            System.out.println(c5);
-
-
-            arq.close();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -7,7 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-public class Livro {
+public class Livro implements registros{
 	protected int idLivro;
 	protected String titulo;
 	protected String nome;
@@ -15,8 +15,8 @@ public class Livro {
 
 	DecimalFormat df = new DecimalFormat("#,##0.00");
 
-	public Livro(int i, String t, String a, float p) {
-		idLivro = i;
+	public Livro( String t, String a, float p) {
+		idLivro = -1;
 		titulo = t;
 		nome = a;
 		preco = p;
@@ -61,6 +61,14 @@ public class Livro {
 		nome = dis.readUTF();
 		preco = dis.readFloat();
 
+	}
+
+	public void setId(int id){
+		this.idLivro =id;
+	}
+
+	public int getID() {
+		return this.idLivro;
 	}
 
 }

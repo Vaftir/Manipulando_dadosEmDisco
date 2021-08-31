@@ -7,7 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-public class Cliente {
+public class Cliente implements registros{
 
 
     protected String email;
@@ -21,8 +21,8 @@ public class Cliente {
         email = "";
     }
 
-    public Cliente(int i, String n, String e) {
-        idCliente = i;
+    public Cliente(String n, String e) {
+        idCliente = -1;
         nome = n;
         email = e;
     }
@@ -37,6 +37,8 @@ public class Cliente {
 
         return bas.toByteArray();
     }
+
+
 
 
     public void fromByteArray(byte[] ba) throws IOException {
@@ -55,6 +57,15 @@ public class Cliente {
         return "\nID: " + idCliente +
                 "\nNome: " + nome +
                 "\ne-mail: " + email;
+    }
+
+    public void setId(int id){
+        this.idCliente =id;
+    }
+
+
+    public int getID() {
+        return this.idCliente;
     }
 
 

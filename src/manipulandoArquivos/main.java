@@ -36,8 +36,7 @@ public class main {
           c.setId(i);
 
           j =arqCliente.create(c1);
-          c.setId(j);
-          arqCliente.delete(j);
+          c.setId(j);//arqCliente.delete(j);
 
 
 

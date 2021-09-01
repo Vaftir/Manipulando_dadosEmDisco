@@ -50,6 +50,7 @@ public class Cliente implements registros{
         ByteArrayInputStream bti = new ByteArrayInputStream(ba);
         DataInputStream btCi = new DataInputStream(bti);
 
+        this.lapide = btCi.readBoolean();
         this.idCliente = btCi.readInt();
         this.nome = btCi.readUTF();
         this.email = btCi.readUTF();

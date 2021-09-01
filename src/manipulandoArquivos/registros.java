@@ -6,4 +6,7 @@ public interface registros {
     void setId(int proximoID);
 
     public int getID();
+
+    void newLapide(boolean lapide);
+    public boolean getLapide();
 }

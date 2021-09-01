@@ -30,7 +30,7 @@ public class Arrquivo <T extends registros> {//obs tipos genericos sao interface
 
         arquivo.seek(0);
 
-        int ultimoID = arquivo.read();
+        int ultimoID = arquivo.readInt();
         int nextID = ultimoID + 1;
 
         arquivo.seek(0);
@@ -64,7 +64,7 @@ public class Arrquivo <T extends registros> {//obs tipos genericos sao interface
             lapide = arquivo.readByte();
             tam = arquivo.readInt();
 
-            if(lapide == ' ') {
+            if(object.getLapide()) {
 
                 ba = new byte[tam];
                 arquivo.read(ba);
@@ -80,5 +80,30 @@ public class Arrquivo <T extends registros> {//obs tipos genericos sao interface
 
         return null;
     }
+
+
+    public void delete(int id) throws Exception {
+        arquivo.seek(TAM_CABECALHO);//Pular o cabecalho e ir para o registro;
+
+
+        T object= constructor.newInstance();
+
+        int tam;
+        //byte[] ba;
+
+
+        while(arquivo.getFilePointer() < arquivo.length()){
+            tam = arquivo.readInt();
+            if(object.getLapide()) {
+                if(object.getID() == id)
+                    object.newLapide(false);
+            }
+            else
+                arquivo.skipBytes(tam);
+
+        }
+    }
+
+
 
 }

@@ -12,6 +12,7 @@ public class Livro implements registros{
 	protected String titulo;
 	protected String nome;
 	protected float preco;
+	protected boolean lapide = true;
 
 	DecimalFormat df = new DecimalFormat("#,##0.00");
 
@@ -42,10 +43,11 @@ public class Livro implements registros{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		DataOutputStream das = new DataOutputStream(baos);
 
-		das.writeInt(idLivro);
-		das.writeUTF(titulo);
-		das.writeUTF(nome);
-		das.writeFloat(preco);
+		das.writeBoolean(this.lapide);
+		das.writeInt(this.idLivro);
+		das.writeUTF(this.titulo);
+		das.writeUTF(this.nome);
+		das.writeFloat(this.preco);
 
 		return baos.toByteArray();
 
@@ -56,10 +58,10 @@ public class Livro implements registros{
 		ByteArrayInputStream bais = new ByteArrayInputStream(ba);
 		DataInputStream dis = new DataInputStream(bais);
 
-		idLivro = dis.readInt();
-		titulo = dis.readUTF();
-		nome = dis.readUTF();
-		preco = dis.readFloat();
+		this.idLivro = dis.readInt();
+		this.titulo = dis.readUTF();
+		this.nome = dis.readUTF();
+		this.preco = dis.readFloat();
 
 	}
 
@@ -70,5 +72,15 @@ public class Livro implements registros{
 	public int getID() {
 		return this.idLivro;
 	}
+
+	@Override
+	public void newLapide(boolean lapide) {
+		this.lapide = lapide;
+	}
+
+	public boolean getLapide(){
+		return this.lapide;
+	}
+
 
 }

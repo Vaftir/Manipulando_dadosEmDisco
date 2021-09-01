@@ -13,6 +13,7 @@ public class Cliente implements registros{
     protected String email;
     protected String nome;
     protected int idCliente;
+    protected boolean lapide = true;
 
 
     public Cliente() {
@@ -22,6 +23,7 @@ public class Cliente implements registros{
     }
 
     public Cliente(String n, String e) {
+        lapide = true;
         idCliente = -1;
         nome = n;
         email = e;
@@ -31,6 +33,8 @@ public class Cliente implements registros{
 
         ByteArrayOutputStream bas = new ByteArrayOutputStream();
         DataOutputStream bs = new DataOutputStream(bas);
+
+        bs.writeBoolean(this.lapide);
         bs.writeInt(this.idCliente);
         bs.writeUTF(this.nome);
         bs.writeUTF(this.email);
@@ -46,9 +50,9 @@ public class Cliente implements registros{
         ByteArrayInputStream bti = new ByteArrayInputStream(ba);
         DataInputStream btCi = new DataInputStream(bti);
 
-        idCliente = btCi.readInt();
-        nome = btCi.readUTF();
-        email = btCi.readUTF();
+        this.idCliente = btCi.readInt();
+        this.nome = btCi.readUTF();
+        this.email = btCi.readUTF();
 
     }
 
@@ -66,6 +70,15 @@ public class Cliente implements registros{
 
     public int getID() {
         return this.idCliente;
+    }
+
+    public void newLapide(boolean newlapide) {
+
+        this.lapide = newlapide;
+    }
+
+    public boolean getLapide(){
+        return this.lapide;
     }
 
 

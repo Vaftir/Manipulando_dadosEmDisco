@@ -9,78 +9,60 @@ import java.text.DecimalFormat;
 
 public class Cliente implements registros{
 
-
-    protected String email;
-    protected String nome;
     protected int idCliente;
-    protected boolean lapide = true;
+    protected String nome;
+    protected String email;
 
+    public Cliente(String t, String a) {
+        this.idCliente = -1;
+        this.nome = t;
+        this.email = a;
+    }
 
     public Cliente() {
-        idCliente = -1;
-        nome = "";
-        email = "";
+        this.idCliente = -1;
+        this.nome = "";
+        this.email = "";
     }
 
-    public Cliente(String n, String e) {
-        lapide = true;
-        idCliente = -1;
-        nome = n;
-        email = e;
+    public void setID(int id) {
+        this.idCliente = id;
     }
-
-    public byte[] toByteArray() throws IOException {
-
-        ByteArrayOutputStream bas = new ByteArrayOutputStream();
-        DataOutputStream bs = new DataOutputStream(bas);
-
-        bs.writeBoolean(this.lapide);
-        bs.writeInt(this.idCliente);
-        bs.writeUTF(this.nome);
-        bs.writeUTF(this.email);
-
-        return bas.toByteArray();
-    }
-
-
-
-
-    public void fromByteArray(byte[] ba) throws IOException {
-
-        ByteArrayInputStream bti = new ByteArrayInputStream(ba);
-        DataInputStream btCi = new DataInputStream(bti);
-
-        this.lapide = btCi.readBoolean();
-        this.idCliente = btCi.readInt();
-        this.nome = btCi.readUTF();
-        this.email = btCi.readUTF();
-
-    }
-
-
-    public String toString() {
-        return "\nID: " + idCliente +
-                "\nNome: " + nome +
-                "\ne-mail: " + email;
-    }
-
-    public void setId(int id){
-        this.idCliente =id;
-    }
-
 
     public int getID() {
         return this.idCliente;
     }
 
-    public void newLapide(boolean newlapide) {
+    public String toString() {
 
-        this.lapide = newlapide;
+        return "\nID....: " + this.idCliente + "\nNome: " + this.nome + "\nEmail.: " + this.email;
     }
 
-    public boolean getLapide(){
-        return this.lapide;
+    public byte[] toByteArray() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeUTF(nome);
+        dos.writeUTF(email);
+        dos.writeInt(idCliente);
+        return baos.toByteArray();
     }
 
+    public void fromByteArray(byte[] ba) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+        DataInputStream dis = new DataInputStream(bais);
+        nome = dis.readUTF();
+        email = dis.readUTF();
+        idCliente = dis.readInt();
+    }
 
+    public void setId(int id) {
+        this.idCliente = id;
+    }
+
+    public int getId() {
+        return this.idCliente;
+    }
 }
+
+

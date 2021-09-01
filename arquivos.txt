@@ -1,0 +1,48 @@
+package manipulandoArquivos;
+
+import java.io.File;
+import java.io.IOException;
+
+u
+// Movendo ponteiro para primeiro registro (após cabeçalho).
+    arquivo.seek(TAMANHO_CABECALHO);
+    byte lapide;
+    byte[] ba; // Vetor de bytes do obj desatualizado.
+    T obj = construtor.newInstance();
+    int tam;
+
+    while(arquivo.getFilePointer() < arquivo.length()) {
+
+      long pos = arquivo.getFilePointer();
+      // Leitura de Lapide & Tamanho do Registro.
+      lapide = arquivo.readByte();
+      tam = arquivo.readInt();
+      // Se o registro for valido (não deletado).
+      if(lapide == ' ') {
+
+        ba = new byte[tam];
+        arquivo.read(ba);
+        obj.fromByteArray(ba); // obj formado.
+        if(obj.getID() == novoObj.getID()) {
+          // Criacão de um novo registro para Novo Objeto.
+          byte[] ba2 = novoObj.toByteArray(); // Vetor de bytes com obj atualizado.
+          //arquivo.read(ba2);
+          novoObj.fromByteArray(ba2); // novoObj formado.
+
+          // Se o novo objetor for menor ou igual ele ocupa o mesmo espaço.
+          if(ba2.length <= ba.length) {
+            arquivo.seek(pos);
+            arquivo.writeByte(ba2[ba2.length - 1]);
+          } // Caso contrario, excluir esse registro e criar um novo no final do arquivo.
+          else {
+            arquivo.seek(pos);
+            arquivo.writeByte('*'); // Marcando a Lapide.
+            arquivo.seek(arquivo.length());
+            arquivo.writeByte(ba2[ba2.length - 1]);
+          }
+          return true;
+        }
+      }
+    }
+    return false;
+  }

@@ -11,23 +11,39 @@ public class main {
     public static void main(String[] args) {
 
 
+
+        File f = new File("dados/livros/arquivo.db");
+        f.delete();
+        f = new File("dados/clientes/arquivo.db");
+        f.delete();
+
         byte[] ba;
 
         Arrquivo<Cliente> arqCliente;
         Arrquivo<Livro> arqLivro;
 
-       Livro l = new Livro ("Harry Potter e a camara secreta (Exclusivo)", "J.K.Roling", 91.50F);
-       Livro l1 = new Livro("Harry Potter e o calice de fogo (Vers. Illustrada)", "J.K.Roling e Martin robin", 159.99F);
-       Livro l3 = new Livro("Harry potter e as reliquias da morte P1 e 2 (Vers. Illustrada)", "J.K.Roling e Martin robin", 359.99F);
 
-       // Cliente c = new Cliente( "Robson Whishkaiser Yormugandir","godsnake21@gmail.com");
+
+        // Cliente c = new Cliente( "Robson Whishkaiser Yormugandir","godsnake21@gmail.com");
         //Cliente c1 = new Cliente( "Pedro Euzebio da silva","paodequeijo69@gmail.com");
-       // Cliente c2 = new Cliente( "Marcio Cerviote de Nogueira","mcnogueirinha@gmail.com");
+        // Cliente c2 = new Cliente( "Marcio Cerviote de Nogueira","mcnogueirinha@gmail.com");
 
         try {
 
-            File f = new File("dados/livros/arquivo.db");
-            f.delete();
+
+
+            Livro l = new Livro (
+                    "Harry Potter e a camara secreta (Exclusivo)",
+                    "J.K.Roling","9788576573008", 91.50F
+            );
+            Livro l1 = new Livro(
+                    "Harry Potter e o calice de fogo (Vers. Illustrada)",
+                    "J.K.Roling e Martin robin","9788576572009", 159.99F
+            );
+            Livro l2 = new Livro(
+                    "Harry potter e as reliquias da morte P1 e 2 (Vers. Illustrada)",
+                    "J.K.Roling e Martin robin","1111111111111", 359.99F
+            );
 
 
             int i,j,k; //ids
@@ -39,8 +55,8 @@ public class main {
             l.setId(i);
             j =arqLivro.create(l1);
             l1.setId(j);
-            k =arqLivro.create(l3);
-            l3.setId(k);
+            k =arqLivro.create(l2);
+            l2.setId(k);
 
             //Pesquisa os clientes
             Livro l4 = arqLivro.read(i);
@@ -65,9 +81,15 @@ public class main {
 
             //Update
 
+            l1.autor = "Richard Matheson (editado)";
+            arqLivro.update(l1);
+            System.out.println();
+            System.out.println(arqLivro.read(j));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }
 

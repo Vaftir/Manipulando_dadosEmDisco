@@ -78,9 +78,9 @@ public class Arrquivo <T extends registros> {//obs tipos genericos sao interface
     }
 
     /**
-    * @param ld - Id de do objeto que sera excluido
-    * @return true- se ofi excluido ou false se o objeto nao foi encontrado
-    */
+     * @param ld - Id de do objeto que sera excluido
+     * @return true- se ofi excluido ou false se o objeto nao foi encontrado
+     */
     public boolean delete(int ld) throws Exception {
         // Movendo o ponteiro para primeiro registro (após cabeçalho).
         arquivo.seek(TAM_CABECALHO);
@@ -109,50 +109,50 @@ public class Arrquivo <T extends registros> {//obs tipos genericos sao interface
         return false;
     }
 
-    public boolean update(T newObject) throws Exception {
+    public boolean update(T novoObj) throws Exception {
         arquivo.seek(TAM_CABECALHO);//Pular o cabecalho e ir para o registro;
 
-        T objLido = constructor.newInstance();
+        T obj = constructor.newInstance();
         int tam;
         byte lapide;
         byte[] ba;
+        byte[] novoBA;
         long position;
+        int idProcurado = novoObj.getID();
 
-        while (arquivo.getFilePointer() < arquivo.length()){
+        while (arquivo.getFilePointer() < arquivo.length()){/// enquanto n EOF
             //pega a posicao do ponteiro
-            position = arquivo.getFilePointer();
-
-            //le os dados necessarios tamanho e o lapide
-            lapide= arquivo.readByte();
-            tam = arquivo.readInt();
+            position = arquivo.getFilePointer();///ARMAZENA O PRIMEIRO BYTE DO REGISTRO
+            lapide= arquivo.readByte();///LE O LAPIDE
+            tam = arquivo.readInt();///LE O TAMANHO DO VETOR DE BYTES
 
             if(lapide == ' '){
 
                 //Tira o objeto desatualizado do registro
                 ba = new byte[tam];
                 arquivo.read(ba);
-                objLido.fromByteArray(ba);
+                obj.fromByteArray(ba);
 
                 //verifica se e o objeto necessario
-                if(objLido.getID() == newObject.getID()){
+                if(obj.getID() == idProcurado){
 
                     //cria um novo registro para o Novo objeto
-                    byte[] ba2 = newObject.toByteArray();
-                    newObject.fromByteArray(ba2);//Novo objeto ok
+                    novoBA = novoObj.toByteArray();
+                    int novoTam = novoBA.length;
 
                     //se o tamanho for menor ou igual ele ocupa o mesmo espaço
-                    if(ba2.length <= ba.length){
-
-                        arquivo.seek(position);
-                        arquivo.write(ba2[ba2.length-1]);
-                   //se nao ele exclui esse registro e coloca no final do arquivo
-                    }else{
+                    if(novoBA.length <= tam){// registro do mesmo tamanho ou menor
+                        arquivo.seek(position + 5);
+                        arquivo.write(novoBA);
+                        //se nao ele exclui esse registro e coloca no final do arquivo
+                    }else{//registro aumentou
 
                         arquivo.seek(position);
                         arquivo.writeByte('*');//marca como deletado aquela pos
-
                         arquivo.seek(arquivo.length());
-                        arquivo.writeByte(ba2[ba2.length -1]);
+                        arquivo.writeByte(' ');
+                        arquivo.writeInt(novoTam);
+                        arquivo.write(novoBA);
                     }
 
                     return true;
